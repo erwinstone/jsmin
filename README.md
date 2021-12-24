@@ -33,7 +33,7 @@ jsmin dist/js --watch
 npm install @erwinstone/jsmin
 ```
 ```javascript
-import { jsmin, jsminStr } from '@erwinstone/jsmin'
+import { jsmin, jsminRaw } from '@erwinstone/jsmin'
 
 await jsmin({
 	path: 'dist/js',
@@ -48,7 +48,7 @@ await jsmin({
 
 // or
 
-await jsminStr(`
+await jsminRaw(`
 	function hello() {
 		console.log("Hello world");
 	}

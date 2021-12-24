@@ -71,7 +71,7 @@ export async function jsmin(params: jsminParams) {
 	}
 }
 
-export async function jsminStr(script: string) {
+export async function jsminRaw(script: string) {
 	return (await transform(script, { minify: true })).code
 }
 
