@@ -1,6 +1,6 @@
 /*!
-* @erwinstone/jsmin v1.0.1 (https://github.com/erwinstone/jsmin#readme)
-* Copyright 2021 erwinstone
+* @erwinstone/jsmin v1.0.2 (https://github.com/erwinstone/jsmin#readme)
+* Copyright 2022 - 2022 erwinstone
 * Licensed under MIT (https://github.com/erwinstone/jsmin/blob/master/LICENSE)
 */
 import{promises as o}from"fs";import{posix as f}from"path";import{performance as a}from"perf_hooks";import{watch as u}from"chokidar";import{transform as l,build as h}from"esbuild";const e={starting:t=>(console.log(`Starting '${t}'...`),a.now()),finished:(t,n)=>{let i=Math.round(a.now()-n),s=i>=1e3?`${(i/1e3).toFixed(2)} s`:`${Math.round(i)} ms`;s=s.toString(),console.log(`Finished '${t}' after ${s}`)}};async function m(t,n){n=n||[];const i=await o.readdir(t);for(const s of i){const r=f.join(t,s);(await o.stat(r)).isDirectory()?n=await m(r,n):n.push(r)}return g(n)}function g(t){return t.filter(n=>n.endsWith(".js")&&!n.endsWith(".min.js"))}async function c(t){const n=e.starting("jsmin");let i=[];(await o.stat(t)).isDirectory()?i=await m(t):i.push(t),await Promise.all(i.map(s=>{h({entryPoints:[s],outfile:s.slice(0,-2)+"min.js",minify:!0})})),e.finished("jsmin",n)}function p(t){u(t,{ignoreInitial:!0}).on("all",(n,i)=>setTimeout(async()=>!i.endsWith(".min.js")&&await c(t),200)).on("ready",()=>console.log("Ready for changes"))}async function x(t){t.watch===!0?p(t.path):await c(t.path)}async function P(t){return(await l(t,{minify:!0})).code}export{x as jsmin,P as jsminRaw};
